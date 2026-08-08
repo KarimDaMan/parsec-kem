@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090b10">
+    <meta
+      name="description"
+      content="A private, lightweight launcher for the official Parsec web client."
+    >
+    <title>Parsec KEM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one" aria-hidden="true"></div>
+    <div class="ambient ambient-two" aria-hidden="true"></div>
+
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Parsec KEM home">
+          <span class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </span>
+          <span>PARSEC<span class="brand-accent">/KEM</span></span>
+        </a>
+        <div class="system-pill">
+          <span class="pulse" aria-hidden="true"></span>
+          <span>WEB ACCESS READY</span>
+        </div>
+      </header>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="eyebrow"><span>REMOTE CONSOLE</span><span>01</span></div>
+        <h1 id="hero-title">
+          Your machine,<br>
+          <span>one clean jump away.</span>
+        </h1>
+        <p class="lede">
+          Open the official Parsec web client from Chrome or Chromium. This
+          launcher stores no credentials and proxies no session traffic.
+        </p>
+
+        <div class="actions">
+          <a
+            class="button button-primary"
+            id="launch-parsec"
+            href="https://web.parsec.app/"
+          >
+            <span>Launch Parsec Web</span>
+            <span class="button-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a
+            class="button button-secondary"
+            href="https://parsec.app/downloads"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Native downloads
+          </a>
+        </div>
+
+        <p class="browser-note" id="browser-note" role="status">
+          <span aria-hidden="true">●</span>
+          Best opened in a Chromium-based browser.
+        </p>
+      </section>
+
+      <section class="connection" aria-labelledby="connection-title">
+        <div class="connection-heading">
+          <p class="section-label">CONNECTION PATH</p>
+          <h2 id="connection-title">Three steps. No middleman.</h2>
+        </div>
+
+        <ol class="steps">
+          <li>
+            <span class="step-number">01</span>
+            <div>
+              <h3>Open the client</h3>
+              <p>Use the launch button above from Chrome or Chromium.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">02</span>
+            <div>
+              <h3>Sign in to Parsec</h3>
+              <p>Your account is handled only by Parsec’s official site.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-number">03</span>
+            <div>
+              <h3>Select KKBLADE</h3>
+              <p>The host appears after this computer finishes Parsec sign-in.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <footer>
+        <p>PARSEC/KEM · PERSONAL LAUNCHER</p>
+        <p>
+          Independent launcher. Parsec is a product of Unity Technologies.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
