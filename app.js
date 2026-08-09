@@ -2,6 +2,9 @@ const accessForm = document.querySelector("#access-form");
 const accessKeyInput = document.querySelector("#access-key");
 const gatewayInput = document.querySelector("#gateway-url");
 const connectButton = document.querySelector("#connect-button");
+const privateConnectButton = document.querySelector("#private-connect-button");
+const oneClickTitle = document.querySelector("#one-click-title");
+const oneClickDescription = document.querySelector("#one-click-description");
 const disconnectButton = document.querySelector("#disconnect-button");
 const fullscreenButton = document.querySelector("#fullscreen-button");
 const desktopPanel = document.querySelector("#desktop-panel");
@@ -27,6 +30,12 @@ let drawingFrame = false;
 let firstFrameReceived = false;
 let pointerFrame = null;
 let pendingPointer = null;
+let privateLinkToken = null;
+
+function readPrivateLinkToken() {
+  const token = new URLSearchParams(window.location.hash.slice(1)).get("connect");
+  return /^[A-Za-z0-9_-]{32,128}$/.test(token ?? "") ? token : null;
+}
 
 function setState(state, message) {
   document.body.dataset.connection = state;
@@ -55,6 +64,10 @@ function setConnectedControls(connected) {
   gatewayInput.disabled = connected;
   disconnectButton.disabled = !connected;
   fullscreenButton.disabled = !connected;
+  if (privateLinkToken) {
+    privateConnectButton.hidden = connected;
+    privateConnectButton.disabled = connected;
+  }
 }
 
 function showConnecting(message) {
@@ -89,6 +102,11 @@ function closeSocket(reason = "Disconnected") {
   sessionDetail.textContent = "Waiting for a private session";
   resolutionLabel.textContent = "—";
   setState("offline", reason);
+  if (privateLinkToken) {
+    oneClickTitle.textContent = "Your private link is ready";
+    oneClickDescription.textContent = "Tap below to reconnect. There is no code to enter.";
+    privateConnectButton.textContent = "Reconnect to my computer";
+  }
 }
 
 async function drawNextFrame() {
@@ -114,6 +132,10 @@ async function drawNextFrame() {
       desktopCanvas.focus({ preventScroll: true });
       sessionDetail.textContent = "Encrypted live session";
       setState("online", "Desktop online");
+      if (privateLinkToken) {
+        oneClickTitle.textContent = "Your computer is open";
+        oneClickDescription.textContent = "Use the live desktop below. Nothing else is required.";
+      }
     }
   } catch {
     setState("warning", "Frame decode error");
@@ -157,6 +179,10 @@ function connect(accessKey, gateway) {
   showConnecting("Opening secure desktop…");
   setState("connecting", "Connecting");
   sessionDetail.textContent = "Authorizing private session";
+  if (privateLinkToken) {
+    oneClickTitle.textContent = "Opening your computer…";
+    oneClickDescription.textContent = "Your private link was recognized. Connecting automatically.";
+  }
 
   try {
     socket = new WebSocket(url);
@@ -191,6 +217,10 @@ accessForm.addEventListener("submit", (event) => {
     return;
   }
   connect(key, gatewayInput.value);
+});
+
+privateConnectButton.addEventListener("click", () => {
+  if (privateLinkToken) connect(privateLinkToken, gatewayInput.value);
 });
 
 disconnectButton.addEventListener("click", () => closeSocket("Disconnected"));
@@ -282,3 +312,9 @@ window.addEventListener("beforeunload", () => {
 });
 
 setState("offline", "Ready to connect");
+privateLinkToken = readPrivateLinkToken();
+if (privateLinkToken) {
+  document.body.classList.add("private-link-active");
+  privateConnectButton.hidden = false;
+  connect(privateLinkToken, gatewayInput.value);
+}

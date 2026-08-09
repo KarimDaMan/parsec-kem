@@ -163,7 +163,60 @@ h1 span { color: #aeb5c2; font-weight: 500; }
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
 }
 
-.access-form > label, .advanced label {
+.one-click-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.one-click-card > span {
+  margin-bottom: 10px;
+  color: var(--accent);
+  font-family: "Cascadia Mono", "SFMono-Regular", Consolas, monospace;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.one-click-card > strong {
+  color: var(--text);
+  font-size: clamp(20px, 2vw, 28px);
+  letter-spacing: -0.025em;
+}
+
+.one-click-card > p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.private-connect-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 18px;
+}
+
+.manual-connect {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.manual-connect summary,
+.advanced summary {
+  width: max-content;
+  color: #929bab;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.manual-connect[open] summary,
+.advanced[open] summary {
+  margin-bottom: 14px;
+}
+
+.manual-connect label, .advanced label {
   display: block;
   margin-bottom: 9px;
   color: #c8ced8;
@@ -231,9 +284,12 @@ input:disabled { opacity: 0.55; }
 }
 
 .advanced { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
-.advanced summary { width: max-content; color: #929bab; cursor: pointer; font-size: 12px; }
-.advanced[open] summary { margin-bottom: 14px; }
 .advanced input { min-height: 42px; }
+
+.private-link-active .manual-connect,
+.private-link-active .advanced {
+  display: none;
+}
 
 .desktop-panel {
   overflow: hidden;

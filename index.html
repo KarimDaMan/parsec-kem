@@ -6,9 +6,9 @@
     <meta name="theme-color" content="#080a0f">
     <meta name="description" content="Private browser access to the Parsec KEM Windows desktop.">
     <title>Parsec KEM â€” Browser Desktop</title>
-    <link rel="stylesheet" href="./styles.css?v=20260809-1">
-    <script src="./gateway-config.js?v=20260809-1" defer></script>
-    <script src="./app.js?v=20260809-1" defer></script>
+    <link rel="stylesheet" href="./styles.css?v=20260809-2">
+    <script src="./gateway-config.js?v=20260809-2" defer></script>
+    <script src="./app.js?v=20260809-2" defer></script>
   </head>
   <body>
     <div class="page-glow page-glow-left" aria-hidden="true"></div>
@@ -30,30 +30,35 @@
         <section class="connect-card" id="connect-card" aria-labelledby="connect-title">
           <div class="connect-copy">
             <p class="eyebrow">PRIVATE REMOTE CONSOLE</p>
-            <h1 id="connect-title">Your Windows desktop,<br><span>inside this page.</span></h1>
+            <h1 id="connect-title">Open this computer<br><span>in one click.</span></h1>
             <p class="lede">
-              Enter the private access key once. The desktop opens belowâ€”no Parsec
-              redirect and no additional account sign-in.
+              Use your private link and the desktop opens automaticallyâ€”nothing to
+              understand, type, or sign into.
             </p>
           </div>
 
-          <form class="access-form" id="access-form">
-            <label for="access-key">Private access key</label>
-            <div class="access-row">
-              <input id="access-key" name="access-key" type="password" inputmode="text"
-                autocomplete="off" autocapitalize="none" spellcheck="false"
-                placeholder="Paste your access key" required>
-              <button class="button button-primary" id="connect-button" type="submit">Connect</button>
+          <div class="access-form">
+            <div class="one-click-card" id="one-click-card">
+              <span>ONE-CLICK ACCESS</span>
+              <strong id="one-click-title">Open your private link</strong>
+              <p id="one-click-description">The special link connects this computer automatically. Do not share it.</p>
+              <button class="button button-primary private-connect-button" id="private-connect-button" type="button" hidden>
+                Connect to my computer
+              </button>
             </div>
-            <p class="form-note">The key is used for this connection only and is never stored by the page.</p>
-            <details class="advanced">
-              <summary>Connection details</summary>
-              <label for="gateway-url">Secure gateway</label>
+
+            <details class="manual-connect">
+              <summary>Use a backup code instead</summary>
+              <form id="access-form">
+                <label for="access-key">Backup code</label>
+                <div class="access-row">
+                  <input id="access-key" name="access-key" type="password" inputmode="text"
+                    autocomplete="off" autocapitalize="none" spemzÒÚ$z{-®éÜj×eway-url">Secure gateway</label>
               <input id="gateway-url" name="gateway-url" type="url" autocomplete="off"
                 spellcheck="false" aria-describedby="gateway-help">
               <p id="gateway-help">Prefilled with the active Cloudflare tunnel.</p>
             </details>
-          </form>
+          </div>
         </section>
 
         <section class="desktop-panel" id="desktop-panel" aria-labelledby="desktop-title">

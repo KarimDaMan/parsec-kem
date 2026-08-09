@@ -4,6 +4,11 @@ Parsec KEM is a private browser desktop for a Windows host. The published page
 opens the live Windows screen directly in a canvas and sends mouse, touch, and
 keyboard controls through an authenticated Cloudflare WebSocket tunnel.
 
+The normal entry point is a private one-click URL whose `#connect=...` fragment
+is read in the browser and starts the desktop automatically. The fragment is
+never included in the HTTP request for the static page. A manual backup-code
+form remains collapsed for recovery.
+
 ## Security model
 
 - The desktop host listens on `127.0.0.1` only.
