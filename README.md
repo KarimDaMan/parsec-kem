@@ -1,25 +1,22 @@
 # Parsec KEM
 
-A lightweight personal launcher for the official [Parsec web client](https://web.parsec.app/).
+Parsec KEM is a private browser desktop for a Windows host. The published page
+opens the live Windows screen directly in a canvas and sends mouse, touch, and
+keyboard controls through an authenticated Cloudflare WebSocket tunnel.
 
-## What this is
+## Security model
 
-- A static page suitable for Cloudflare Pages or GitHub Pages.
-- A direct launch path to Parsec's official Chromium web client.
-- A no-backend site that stores no credentials and proxies no session traffic.
+- The desktop host listens on `127.0.0.1` only.
+- Cloudflare Tunnel is outbound-only; there is no inbound firewall rule.
+- Every WebSocket session requires a high-entropy access key.
+- The host accepts WebSocket requests only from the two published site origins.
+- The public repository contains the tunnel address but never the access key.
+- The page does not save the access key in local or session storage.
 
-## What this is not
+## Published addresses
 
-- It is not a copy, reverse proxy, or redistribution of Parsec.
-- It does not bypass Parsec authentication.
-- It does not contain or modify any AC backend.
+- Cloudflare Pages: <https://parsec-kem.pages.dev/>
+- GitHub Pages: <https://karimdaman.github.io/parsec-kem/>
 
-## Local preview
-
-Serve this directory with any static file server, then open the local URL in a browser.
-
-## Deployment
-
-For Cloudflare Pages Direct Upload, deploy this directory as the static asset directory. For GitHub Pages, publish the repository root.
-
-Parsec is a product of Unity Technologies. This launcher is independent and unaffiliated.
+The browser desktop is intentionally independent of the blocked Parsec web
+client. It is a private remote-control path, not a copy or proxy of Parsec.
