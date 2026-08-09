@@ -1,28 +1,35 @@
 # Parsec KEM
 
-Parsec KEM is a private browser desktop for a Windows host. The published page
-opens the live Windows screen directly in a canvas and sends mouse, touch, and
-keyboard controls through an authenticated Cloudflare WebSocket tunnel.
+Parsec KEM serves Parsec's official browser client as a top-level Cloudflare
+application. It is not an iframe, launcher, VNC implementation, or desktop
+screenshot stream.
 
-The normal entry point is a private one-click URL whose `#connect=...` and
-`gateway=...` fragment values are read in the browser and start the desktop
-automatically. Fragment values are never included in the HTTP request for the
-static page. Including the gateway in the fragment makes the GitHub Pages link
-self-contained. A manual backup-code form remains collapsed for recovery.
+The Cloudflare Worker loads the current web client from `web.parsec.app` and
+routes the client's Parsec control-plane HTTPS and WebSocket requests through
+the same Cloudflare origin. The actual remote-desktop media connection remains
+Parsec's native WebRTC connection.
+
+## Published address
+
+- Cloudflare Pages: <https://parsec-kem.pages.dev/>
+- Health check: <https://parsec-kem.pages.dev/_parsec_kem_health>
+
+The health check reports `"screenshotStream": false` so the deployed runtime
+can be distinguished from the retired custom desktop-image implementation.
 
 ## Security model
 
-- The desktop host listens on `127.0.0.1` only.
-- Cloudflare Tunnel is outbound-only; there is no inbound firewall rule.
-- Every WebSocket session requires a high-entropy access key.
-- The host accepts WebSocket requests only from the two published site origins.
-- The public repository contains the tunnel address but never the access key.
-- The page does not save the access key in local or session storage.
+- No Parsec credentials, session tokens, or desktop access keys are stored in
+  this repository or in the Worker.
+- The proxy accepts upstream requests only for Parsec-owned hostnames under
+  `parsec.app`, `parsec.gg`, and `parsecusercontent.com`.
+- Cross-origin isolation headers required by the official WebAssembly client
+  are applied at the Cloudflare edge.
+- Worker observability is disabled in the standalone deployment configuration.
 
-## Published addresses
+## Cloudflare Pages
 
-- Cloudflare Pages: <https://parsec-kem.pages.dev/>
-- GitHub Pages: <https://karimdaman.github.io/parsec-kem/>
-
-The browser desktop is intentionally independent of the blocked Parsec web
-client. It is a private remote-control path, not a copy or proxy of Parsec.
+The repository contains `_worker.js` in the Pages output directory, using
+Cloudflare Pages Functions advanced mode. `wrangler.jsonc` pins the runtime
+compatibility date and enables public-origin fetches required for the official
+Parsec upstream.
