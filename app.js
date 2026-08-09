@@ -32,9 +32,14 @@ let pointerFrame = null;
 let pendingPointer = null;
 let privateLinkToken = null;
 
-function readPrivateLinkToken() {
-  const token = new URLSearchParams(window.location.hash.slice(1)).get("connect");
-  return /^[A-Za-z0-9_-]{32,128}$/.test(token ?? "") ? token : null;
+function readPrivateLinkSettings() {
+  const settings = new URLSearchParams(window.location.hash.slice(1));
+  const token = settings.get("connect");
+  const gateway = settings.get("gateway");
+  return {
+    token: /^[A-Za-z0-9_-]{32,128}$/.test(token ?? "") ? token : null,
+    gateway: /^wss:\/\/[a-z0-9.-]+(?::\d+)?$/i.test(gateway ?? "") ? gateway : null,
+  };
 }
 
 function setState(state, message) {
@@ -312,8 +317,10 @@ window.addEventListener("beforeunload", () => {
 });
 
 setState("offline", "Ready to connect");
-privateLinkToken = readPrivateLinkToken();
+const privateLinkSettings = readPrivateLinkSettings();
+privateLinkToken = privateLinkSettings.token;
 if (privateLinkToken) {
+  if (privateLinkSettings.gateway) gatewayInput.value = privateLinkSettings.gateway;
   document.body.classList.add("private-link-active");
   privateConnectButton.hidden = false;
   connect(privateLinkToken, gatewayInput.value);
