@@ -53,7 +53,17 @@
                 <label for="access-key">Backup code</label>
                 <div class="access-row">
                   <input id="access-key" name="access-key" type="password" inputmode="text"
-                    autocomplete="off" autocapitalize="none" spemzÒÚ$z{-®éÜj×eway-url">Secure gateway</label>
+                    autocomplete="off" autocapitalize="none" spellcheck="false"
+                    placeholder="Paste backup code" required>
+                  <button class="button button-primary" id="connect-button" type="submit">Connect manually</button>
+                </div>
+                <p class="form-note">You normally do not need thisâ€”use your private link.</p>
+              </form>
+            </details>
+
+            <details class="advanced">
+              <summary>Connection details</summary>
+              <label for="gateway-url">Secure gateway</label>
               <input id="gateway-url" name="gateway-url" type="url" autocomplete="off"
                 spellcheck="false" aria-describedby="gateway-help">
               <p id="gateway-help">Prefilled with the active Cloudflare tunnel.</p>
